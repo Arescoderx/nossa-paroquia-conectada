@@ -151,7 +151,7 @@ function HomePage() {
                 </time>
                 <h3 className="mt-2 font-heading text-lg font-bold text-foreground">{post.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{post.excerpt}</p>
-                <Link to="/blog" className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">
+                <Link to="/blog/$postId" params={{ postId: post.id }} className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">
                   Ler mais <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </article>
