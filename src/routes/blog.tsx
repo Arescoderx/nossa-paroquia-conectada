@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { blogPosts, allCommunities } from "@/data/parish";
 import SectionTitle from "@/components/SectionTitle";
 import { MapPin } from "lucide-react";
@@ -38,7 +39,14 @@ function BlogPage() {
                   )}
                 </div>
                 <h2 className="mt-3 font-heading text-2xl font-bold text-foreground">{post.title}</h2>
-                <p className="mt-3 leading-relaxed text-muted-foreground">{post.content}</p>
+                <p className="mt-3 leading-relaxed text-muted-foreground line-clamp-3">{post.excerpt}</p>
+                <Link
+                  to="/blog/$postId"
+                  params={{ postId: post.id }}
+                  className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline"
+                >
+                  Ler mais →
+                </Link>
               </article>
             );
           })}
