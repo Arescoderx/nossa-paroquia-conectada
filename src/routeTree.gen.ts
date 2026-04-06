@@ -9,38 +9,188 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as MinisteriosRouteImport } from './routes/ministerios'
+import { Route as HorariosRouteImport } from './routes/horarios'
+import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ComunidadesIndexRouteImport } from './routes/comunidades.index'
+import { Route as ComunidadesCommunityIdRouteImport } from './routes/comunidades.$communityId'
 
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinisteriosRoute = MinisteriosRouteImport.update({
+  id: '/ministerios',
+  path: '/ministerios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HorariosRoute = HorariosRouteImport.update({
+  id: '/horarios',
+  path: '/horarios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgendaRoute = AgendaRouteImport.update({
+  id: '/agenda',
+  path: '/agenda',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComunidadesIndexRoute = ComunidadesIndexRouteImport.update({
+  id: '/comunidades/',
+  path: '/comunidades/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadesCommunityIdRoute = ComunidadesCommunityIdRouteImport.update({
+  id: '/comunidades/$communityId',
+  path: '/comunidades/$communityId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
+  '/blog': typeof BlogRoute
+  '/contato': typeof ContatoRoute
+  '/horarios': typeof HorariosRoute
+  '/ministerios': typeof MinisteriosRoute
+  '/sobre': typeof SobreRoute
+  '/comunidades/$communityId': typeof ComunidadesCommunityIdRoute
+  '/comunidades/': typeof ComunidadesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
+  '/blog': typeof BlogRoute
+  '/contato': typeof ContatoRoute
+  '/horarios': typeof HorariosRoute
+  '/ministerios': typeof MinisteriosRoute
+  '/sobre': typeof SobreRoute
+  '/comunidades/$communityId': typeof ComunidadesCommunityIdRoute
+  '/comunidades': typeof ComunidadesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agenda': typeof AgendaRoute
+  '/blog': typeof BlogRoute
+  '/contato': typeof ContatoRoute
+  '/horarios': typeof HorariosRoute
+  '/ministerios': typeof MinisteriosRoute
+  '/sobre': typeof SobreRoute
+  '/comunidades/$communityId': typeof ComunidadesCommunityIdRoute
+  '/comunidades/': typeof ComunidadesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/agenda'
+    | '/blog'
+    | '/contato'
+    | '/horarios'
+    | '/ministerios'
+    | '/sobre'
+    | '/comunidades/$communityId'
+    | '/comunidades/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/agenda'
+    | '/blog'
+    | '/contato'
+    | '/horarios'
+    | '/ministerios'
+    | '/sobre'
+    | '/comunidades/$communityId'
+    | '/comunidades'
+  id:
+    | '__root__'
+    | '/'
+    | '/agenda'
+    | '/blog'
+    | '/contato'
+    | '/horarios'
+    | '/ministerios'
+    | '/sobre'
+    | '/comunidades/$communityId'
+    | '/comunidades/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgendaRoute: typeof AgendaRoute
+  BlogRoute: typeof BlogRoute
+  ContatoRoute: typeof ContatoRoute
+  HorariosRoute: typeof HorariosRoute
+  MinisteriosRoute: typeof MinisteriosRoute
+  SobreRoute: typeof SobreRoute
+  ComunidadesCommunityIdRoute: typeof ComunidadesCommunityIdRoute
+  ComunidadesIndexRoute: typeof ComunidadesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ministerios': {
+      id: '/ministerios'
+      path: '/ministerios'
+      fullPath: '/ministerios'
+      preLoaderRoute: typeof MinisteriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/horarios': {
+      id: '/horarios'
+      path: '/horarios'
+      fullPath: '/horarios'
+      preLoaderRoute: typeof HorariosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agenda': {
+      id: '/agenda'
+      path: '/agenda'
+      fullPath: '/agenda'
+      preLoaderRoute: typeof AgendaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +198,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/comunidades/': {
+      id: '/comunidades/'
+      path: '/comunidades'
+      fullPath: '/comunidades/'
+      preLoaderRoute: typeof ComunidadesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidades/$communityId': {
+      id: '/comunidades/$communityId'
+      path: '/comunidades/$communityId'
+      fullPath: '/comunidades/$communityId'
+      preLoaderRoute: typeof ComunidadesCommunityIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgendaRoute: AgendaRoute,
+  BlogRoute: BlogRoute,
+  ContatoRoute: ContatoRoute,
+  HorariosRoute: HorariosRoute,
+  MinisteriosRoute: MinisteriosRoute,
+  SobreRoute: SobreRoute,
+  ComunidadesCommunityIdRoute: ComunidadesCommunityIdRoute,
+  ComunidadesIndexRoute: ComunidadesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
