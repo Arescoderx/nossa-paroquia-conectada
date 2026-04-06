@@ -4,7 +4,7 @@ import { blogPosts, allCommunities } from "@/data/parish";
 import SectionTitle from "@/components/SectionTitle";
 import { MapPin } from "lucide-react";
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   component: BlogPage,
   head: () => ({
     meta: [
