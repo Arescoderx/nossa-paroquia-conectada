@@ -3,7 +3,7 @@ import { allCommunities } from "@/data/parish";
 import CommunityCard from "@/components/CommunityCard";
 import SectionTitle from "@/components/SectionTitle";
 
-export const Route = createFileRoute("/comunidades")({
+export const Route = createFileRoute("/comunidades/")({
   component: CommunitiesPage,
   head: () => ({
     meta: [
