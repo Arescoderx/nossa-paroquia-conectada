@@ -13,10 +13,10 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as MinisteriosRouteImport } from './routes/ministerios'
 import { Route as HorariosRouteImport } from './routes/horarios'
 import { Route as ContatoRouteImport } from './routes/contato'
-import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ComunidadesIndexRouteImport } from './routes/comunidades.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as ComunidadesCommunityIdRouteImport } from './routes/comunidades.$communityId'
 import { Route as BlogPostIdRouteImport } from './routes/blog.$postId'
 
@@ -40,11 +40,6 @@ const ContatoRoute = ContatoRouteImport.update({
   path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AgendaRoute = AgendaRouteImport.update({
   id: '/agenda',
   path: '/agenda',
@@ -58,6 +53,11 @@ const IndexRoute = IndexRouteImport.update({
 const ComunidadesIndexRoute = ComunidadesIndexRouteImport.update({
   id: '/comunidades/',
   path: '/comunidades/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ComunidadesCommunityIdRoute = ComunidadesCommunityIdRouteImport.update({
@@ -74,38 +74,38 @@ const BlogPostIdRoute = BlogPostIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
-  '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
   '/horarios': typeof HorariosRoute
   '/ministerios': typeof MinisteriosRoute
   '/sobre': typeof SobreRoute
   '/blog/$postId': typeof BlogPostIdRoute
   '/comunidades/$communityId': typeof ComunidadesCommunityIdRoute
+  '/blog/': typeof BlogIndexRoute
   '/comunidades/': typeof ComunidadesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
-  '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
   '/horarios': typeof HorariosRoute
   '/ministerios': typeof MinisteriosRoute
   '/sobre': typeof SobreRoute
   '/blog/$postId': typeof BlogPostIdRoute
   '/comunidades/$communityId': typeof ComunidadesCommunityIdRoute
+  '/blog': typeof BlogIndexRoute
   '/comunidades': typeof ComunidadesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
-  '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
   '/horarios': typeof HorariosRoute
   '/ministerios': typeof MinisteriosRoute
   '/sobre': typeof SobreRoute
   '/blog/$postId': typeof BlogPostIdRoute
   '/comunidades/$communityId': typeof ComunidadesCommunityIdRoute
+  '/blog/': typeof BlogIndexRoute
   '/comunidades/': typeof ComunidadesIndexRoute
 }
 export interface FileRouteTypes {
@@ -113,49 +113,49 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/agenda'
-    | '/blog'
     | '/contato'
     | '/horarios'
     | '/ministerios'
     | '/sobre'
     | '/blog/$postId'
     | '/comunidades/$communityId'
+    | '/blog/'
     | '/comunidades/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/agenda'
-    | '/blog'
     | '/contato'
     | '/horarios'
     | '/ministerios'
     | '/sobre'
     | '/blog/$postId'
     | '/comunidades/$communityId'
+    | '/blog'
     | '/comunidades'
   id:
     | '__root__'
     | '/'
     | '/agenda'
-    | '/blog'
     | '/contato'
     | '/horarios'
     | '/ministerios'
     | '/sobre'
     | '/blog/$postId'
     | '/comunidades/$communityId'
+    | '/blog/'
     | '/comunidades/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgendaRoute: typeof AgendaRoute
-  BlogRoute: typeof BlogRouteWithChildren
   ContatoRoute: typeof ContatoRoute
   HorariosRoute: typeof HorariosRoute
   MinisteriosRoute: typeof MinisteriosRoute
   SobreRoute: typeof SobreRoute
   ComunidadesCommunityIdRoute: typeof ComunidadesCommunityIdRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   ComunidadesIndexRoute: typeof ComunidadesIndexRoute
 }
 
@@ -189,13 +189,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/agenda': {
       id: '/agenda'
       path: '/agenda'
@@ -217,6 +210,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComunidadesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/comunidades/$communityId': {
       id: '/comunidades/$communityId'
       path: '/comunidades/$communityId'
@@ -234,25 +234,15 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface BlogRouteChildren {
-  BlogPostIdRoute: typeof BlogPostIdRoute
-}
-
-const BlogRouteChildren: BlogRouteChildren = {
-  BlogPostIdRoute: BlogPostIdRoute,
-}
-
-const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgendaRoute: AgendaRoute,
-  BlogRoute: BlogRouteWithChildren,
   ContatoRoute: ContatoRoute,
   HorariosRoute: HorariosRoute,
   MinisteriosRoute: MinisteriosRoute,
   SobreRoute: SobreRoute,
   ComunidadesCommunityIdRoute: ComunidadesCommunityIdRoute,
+  BlogIndexRoute: BlogIndexRoute,
   ComunidadesIndexRoute: ComunidadesIndexRoute,
 }
 export const routeTree = rootRouteImport
