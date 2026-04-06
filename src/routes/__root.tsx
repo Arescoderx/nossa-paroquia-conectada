@@ -33,16 +33,18 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
+      { title: "Site Para Minha Paroquia" },
       { name: "description", content: "Lovable Generated Project" },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
+      { property: "og:title", content: "Site Para Minha Paroquia" },
       { property: "og:description", content: "Lovable Generated Project" },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://lovable.dev/opengraph-image-p98pqg.png" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c1c176fa-7571-4ed6-8e14-4620182178d8/id-preview-42065277--da742d7a-3cc9-4220-a1b1-c4b85d281ce2.lovable.app-1775500697065.png" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:image", content: "https://lovable.dev/opengraph-image-p98pqg.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c1c176fa-7571-4ed6-8e14-4620182178d8/id-preview-42065277--da742d7a-3cc9-4220-a1b1-c4b85d281ce2.lovable.app-1775500697065.png" },
+      { name: "twitter:title", content: "Site Para Minha Paroquia" },
+      { name: "twitter:description", content: "Lovable Generated Project" },
     ],
     links: [
       {
