@@ -18,6 +18,7 @@ import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ComunidadesIndexRouteImport } from './routes/comunidades.index'
 import { Route as ComunidadesCommunityIdRouteImport } from './routes/comunidades.$communityId'
+import { Route as BlogPostIdRouteImport } from './routes/blog.$postId'
 
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
@@ -64,26 +65,33 @@ const ComunidadesCommunityIdRoute = ComunidadesCommunityIdRouteImport.update({
   path: '/comunidades/$communityId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogPostIdRoute = BlogPostIdRouteImport.update({
+  id: '/$postId',
+  path: '/$postId',
+  getParentRoute: () => BlogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
   '/horarios': typeof HorariosRoute
   '/ministerios': typeof MinisteriosRoute
   '/sobre': typeof SobreRoute
+  '/blog/$postId': typeof BlogPostIdRoute
   '/comunidades/$communityId': typeof ComunidadesCommunityIdRoute
   '/comunidades/': typeof ComunidadesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
   '/horarios': typeof HorariosRoute
   '/ministerios': typeof MinisteriosRoute
   '/sobre': typeof SobreRoute
+  '/blog/$postId': typeof BlogPostIdRoute
   '/comunidades/$communityId': typeof ComunidadesCommunityIdRoute
   '/comunidades': typeof ComunidadesIndexRoute
 }
@@ -91,11 +99,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contato': typeof ContatoRoute
   '/horarios': typeof HorariosRoute
   '/ministerios': typeof MinisteriosRoute
   '/sobre': typeof SobreRoute
+  '/blog/$postId': typeof BlogPostIdRoute
   '/comunidades/$communityId': typeof ComunidadesCommunityIdRoute
   '/comunidades/': typeof ComunidadesIndexRoute
 }
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/horarios'
     | '/ministerios'
     | '/sobre'
+    | '/blog/$postId'
     | '/comunidades/$communityId'
     | '/comunidades/'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/horarios'
     | '/ministerios'
     | '/sobre'
+    | '/blog/$postId'
     | '/comunidades/$communityId'
     | '/comunidades'
   id:
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/horarios'
     | '/ministerios'
     | '/sobre'
+    | '/blog/$postId'
     | '/comunidades/$communityId'
     | '/comunidades/'
   fileRoutesById: FileRoutesById
@@ -138,7 +150,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgendaRoute: typeof AgendaRoute
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
   ContatoRoute: typeof ContatoRoute
   HorariosRoute: typeof HorariosRoute
   MinisteriosRoute: typeof MinisteriosRoute
@@ -212,13 +224,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComunidadesCommunityIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$postId': {
+      id: '/blog/$postId'
+      path: '/$postId'
+      fullPath: '/blog/$postId'
+      preLoaderRoute: typeof BlogPostIdRouteImport
+      parentRoute: typeof BlogRoute
+    }
   }
 }
+
+interface BlogRouteChildren {
+  BlogPostIdRoute: typeof BlogPostIdRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogPostIdRoute: BlogPostIdRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgendaRoute: AgendaRoute,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
   ContatoRoute: ContatoRoute,
   HorariosRoute: HorariosRoute,
   MinisteriosRoute: MinisteriosRoute,
