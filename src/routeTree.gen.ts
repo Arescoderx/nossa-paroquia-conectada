@@ -66,9 +66,9 @@ const ComunidadesCommunityIdRoute = ComunidadesCommunityIdRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogPostIdRoute = BlogPostIdRouteImport.update({
-  id: '/$postId',
-  path: '/$postId',
-  getParentRoute: () => BlogRoute,
+  id: '/blog/$postId',
+  path: '/blog/$postId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -154,6 +154,7 @@ export interface RootRouteChildren {
   HorariosRoute: typeof HorariosRoute
   MinisteriosRoute: typeof MinisteriosRoute
   SobreRoute: typeof SobreRoute
+  BlogPostIdRoute: typeof BlogPostIdRoute
   ComunidadesCommunityIdRoute: typeof ComunidadesCommunityIdRoute
   BlogIndexRoute: typeof BlogIndexRoute
   ComunidadesIndexRoute: typeof ComunidadesIndexRoute
@@ -226,10 +227,10 @@ declare module '@tanstack/react-router' {
     }
     '/blog/$postId': {
       id: '/blog/$postId'
-      path: '/$postId'
+      path: '/blog/$postId'
       fullPath: '/blog/$postId'
       preLoaderRoute: typeof BlogPostIdRouteImport
-      parentRoute: typeof BlogRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -241,6 +242,7 @@ const rootRouteChildren: RootRouteChildren = {
   HorariosRoute: HorariosRoute,
   MinisteriosRoute: MinisteriosRoute,
   SobreRoute: SobreRoute,
+  BlogPostIdRoute: BlogPostIdRoute,
   ComunidadesCommunityIdRoute: ComunidadesCommunityIdRoute,
   BlogIndexRoute: BlogIndexRoute,
   ComunidadesIndexRoute: ComunidadesIndexRoute,

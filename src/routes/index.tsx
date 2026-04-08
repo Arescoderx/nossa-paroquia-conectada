@@ -6,6 +6,7 @@ import heroImage from "@/assets/hero-church.jpg";
 import { communities, parishEvents, blogPosts } from "@/data/parish";
 import CommunityCard from "@/components/CommunityCard";
 import SectionTitle from "@/components/SectionTitle";
+import image from "@/assets/image.png";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -26,13 +27,13 @@ function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden">
+      <section className="relative flex min-h-[70vh] items-center h-full justify-center overflow-hidden">
         <img
-          src={heroImage}
-          alt="Igreja Matriz São Miguel Arcanjo"
-          className="absolute inset-0 h-full w-full object-cover"
-          width={1920}
-          height={1080}
+          src={image}
+          alt="Paróquia Santa Maria Goretti"
+          className="absolute inset-0 object-cover"
+          width={1980}
+          height={400}
         />
         <div className="absolute inset-0 bg-gradient-hero opacity-70" />
         <motion.div
@@ -42,8 +43,7 @@ function HomePage() {
           className="relative z-10 mx-auto max-w-3xl px-4 text-center"
         >
           <h1 className="font-heading text-4xl font-bold text-primary-foreground md:text-6xl">
-            Paróquia São Miguel{" "}
-            <span className="text-gradient-gold">Arcanjo</span>
+            Paróquia Santa Maria Goretti
           </h1>
           <p className="mt-4 text-lg text-primary-foreground/80 md:text-xl">
             Unidos na fé, servindo com amor. Acolhemos você em nossas 13 comunidades.

@@ -21,13 +21,16 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-        <Link to="/" className="flex items-center gap-2">
-          <Cross className="h-7 w-7 text-accent" strokeWidth={2.5} />
+        <Link to="/" className="flex items-center">
+          <img
+            src="https://scontent.fvix24-1.fna.fbcdn.net/v/t39.30808-6/461792440_920673480095092_6520443714597882561_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=1d70fc&_nc_eui2=AeG4X-ZuXRoBJo1gidlyrlmbXGsSTxwpa5VcaxJPHClrla5YCHUL3lgJ7KsQTZDhBXIlkLTJBQPGhbHQfHvuNElH&_nc_ohc=DXC1eI9pvdsQ7kNvwF6uOgn&_nc_oc=Adrm5TIPwj0D-vsmve4ssWKSwVfGi6w2OOfJ_InlDeWyQPJs8bQKiGy2jp51fMW5pdhJ5OiXyp8W9VoevncgnDdW&_nc_zt=23&_nc_ht=scontent.fvix24-1.fna&_nc_gid=SjFm6rAOPWH7_AwXzAfU_w&_nc_ss=7a3a8&oh=00_Af3J2xaLgx6aB6MtjEE8lxW8En7mwHoTLpz_l0ehzIialw&oe=69D9E11B"
+            alt="Logo da Paróquia Santa Maria Goretti"
+            className="h-10 w-auto"
+          />
           <div>
             <span className="font-heading text-lg font-bold text-primary leading-tight block">
-              Paróquia São Miguel
+              Paróquia Santa Maria Goretti
             </span>
-            <span className="text-xs text-muted-foreground">Arcanjo</span>
           </div>
         </Link>
 
@@ -36,11 +39,10 @@ export default function Header() {
             <Link
               key={item.to}
               to={item.to}
-              className={`rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted ${
-                location.pathname === item.to
-                  ? "text-accent font-semibold"
-                  : "text-foreground/80"
-              }`}
+              className={`rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-muted ${location.pathname === item.to
+                ? "text-accent font-semibold"
+                : "text-foreground/80"
+                }`}
             >
               {item.label}
             </Link>
@@ -70,11 +72,10 @@ export default function Header() {
                   key={item.to}
                   to={item.to}
                   onClick={() => setMobileOpen(false)}
-                  className={`rounded-md px-3 py-3 text-sm font-medium transition-colors ${
-                    location.pathname === item.to
-                      ? "text-accent bg-muted"
-                      : "text-foreground/80"
-                  }`}
+                  className={`rounded-md px-3 py-3 text-sm font-medium transition-colors ${location.pathname === item.to
+                    ? "text-accent bg-muted"
+                    : "text-foreground/80"
+                    }`}
                 >
                   {item.label}
                 </Link>

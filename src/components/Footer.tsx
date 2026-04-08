@@ -9,7 +9,7 @@ export default function Footer() {
           <div>
             <div className="mb-4 flex items-center gap-2">
               <Cross className="h-6 w-6 text-accent" />
-              <span className="font-heading text-lg font-bold">Paróquia São Miguel Arcanjo</span>
+              <span className="font-heading text-lg font-bold">Paróquia Santa Maria Goretti</span>
             </div>
             <p className="text-sm text-primary-foreground/70">
               Unidos na fé, servindo com amor. Nossa paróquia acolhe a todos com o coração aberto.
@@ -43,14 +43,14 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 shrink-0" />
-                <span>contato@paroquiasaomiguel.com.br</span>
+                <span>contato@paroquiasantamariagoretti.com.br</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className="mt-8 border-t border-primary-foreground/10 pt-6 text-center text-xs text-primary-foreground/50">
-          © {new Date().getFullYear()} Paróquia São Miguel Arcanjo. Todos os direitos reservados.
+          © {new Date().getFullYear()} Paróquia Santa Maria Goretti. Todos os direitos reservados.
         </div>
       </div>
     </footer>

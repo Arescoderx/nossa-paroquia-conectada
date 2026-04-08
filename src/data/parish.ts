@@ -50,7 +50,7 @@ export const communities: Community[] = [
     id: "nossa-senhora-aparecida",
     name: "Nossa Senhora Aparecida",
     patron: "Nossa Senhora Aparecida",
-    image: chapel1,
+    image: "https://santuariobompastor.com/wp-content/uploads/2023/12/NS-Aparecida-Parte-Externa.jpeg",
     address: "Rua das Flores, 123 - Bairro Jardim Esperança",
     phone: "(11) 3456-7890",
     whatsapp: "5511934567890",
@@ -75,7 +75,7 @@ export const communities: Community[] = [
     id: "sao-jose-operario",
     name: "São José Operário",
     patron: "São José Operário",
-    image: chapel2,
+    image: "https://www.aves.org.br/wp-content/uploads/2022/02/Foto-SAO-JOSE.jpeg",
     address: "Av. Brasil, 456 - Vila Operária",
     phone: "(11) 3456-7891",
     whatsapp: "5511934567891",
@@ -100,7 +100,7 @@ export const communities: Community[] = [
     id: "santa-luzia",
     name: "Santa Luzia",
     patron: "Santa Luzia",
-    image: chapel3,
+    image:"https://www.paroquiasjbatista.com.br/wp-content/uploads/2019/01/csluzia.jpg",
     address: "Rua Santa Luzia, 789 - Sítio Boa Vista",
     phone: "(11) 3456-7892",
     whatsapp: "5511934567892",
@@ -123,11 +123,22 @@ export const communities: Community[] = [
   },
 ];
 
+
 // Placeholder communities for the remaining 10
 const otherCommunityNames = [
-  "São Francisco de Assis", "Santo Antônio", "Nossa Senhora de Fátima",
-  "São Sebastião", "Sagrado Coração de Jesus", "Nossa Senhora do Rosário",
-  "São Pedro", "Santa Rita de Cássia", "Nossa Senhora das Graças", "São Paulo Apóstolo"
+  "Matriz Santa Maria Goretti",
+  "São Pedro (Bela Aurora)",
+  "São Tiago (Jardim América)",
+  "São Francisco de Assis (Jardim América)",
+  "Cristo Operário (Jardim América)",
+  "São Paulo da Cruz (Jardim América)",
+  "Sagrada Família (Vasco da Gama)",
+  "São João Batista (Vasco da Gama)",
+  "Nossa Senhora Aparecida (Bela Aurora)",
+  "Nossa Senhora das Graças (Boa Sorte)",
+  "Santa Luzia (Boa Sorte)",
+  "Santo Antônio (Vale Esperança)",
+  "Sant'Ana (Vale Esperança)"
 ];
 
 export const allCommunities: Community[] = [
