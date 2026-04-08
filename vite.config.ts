@@ -181,6 +181,8 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    appType: "spa",
+
     server: {
       host: "::",
       port: 8080,
@@ -209,9 +211,6 @@ export default defineConfig(({ mode }) => {
       }),
       devClientErrorLogger(),
       devServerFnErrorLogger(),
-      tanstackStart({
-        target: "client"
-      } as any),
       viteReact(),
       mode === "development" && componentTagger(),
     ].filter(Boolean),
