@@ -1,15 +1,18 @@
-import path from "path";
-import { defineConfig, loadEnv } from "vite";
-import tsConfigPaths from "vite-tsconfig-paths";
-import { cloudflare } from "@cloudflare/vite-plugin";
-import { tanstackStart } from "@tanstack/react-start/plugin/vite";
-import viteReact from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
-import { componentTagger } from "lovable-tagger";
+import path from "path"
+import { defineConfig, loadEnv } from "vite"
+import tsConfigPaths from "vite-tsconfig-paths"
 
+import { tanstackStart } from "@tanstack/react-start/plugin/vite"
+import viteReact from "@vitejs/plugin-react"
+import tailwindcss from "@tailwindcss/vite"
+import { componentTagger } from "lovable-tagger"
+
+// =============================
+// DEV CLIENT ERROR LOGGER
+// =============================
 function devClientErrorLogger() {
-  const VIRTUAL_ID = "virtual:dev-client-error-handler";
-  const RESOLVED_ID = "\0" + VIRTUAL_ID;
+  const VIRTUAL_ID = "virtual:dev-client-error-handler"
+  const RESOLVED_ID = "\0" + VIRTUAL_ID
 
   return {
     name: "dev-client-error-logger",
@@ -17,11 +20,11 @@ function devClientErrorLogger() {
     enforce: "pre" as const,
 
     resolveId(id: string) {
-      if (id === VIRTUAL_ID) return RESOLVED_ID;
+      if (id === VIRTUAL_ID) return RESOLVED_ID
     },
 
     load(id: string) {
-      if (id !== RESOLVED_ID) return;
+      if (id !== RESOLVED_ID) return
       return [
         "if (typeof window !== 'undefined' && import.meta.hot) {",
         "  const send = (d) => { try { import.meta.hot.send('client-runtime-error', d) } catch {} };",
@@ -33,18 +36,21 @@ function devClientErrorLogger() {
         "    send({ type: 'unhandled-rejection', message: err?.message || String(err), stack: err?.stack });",
         "  });",
         "}",
-      ].join("\n");
+      ].join("\n")
     },
 
     configureServer(server: import("vite").ViteDevServer) {
-      const origConsoleError = console.error;
-      let forwarding = false;
+      const origConsoleError = console.error
+      let forwarding = false
+
       console.error = (...args: unknown[]) => {
-        origConsoleError.apply(console, args);
-        if (forwarding) return;
-        forwarding = true;
+        origConsoleError.apply(console, args)
+
+        if (forwarding) return
+        forwarding = true
+
         try {
-          const error = args[0];
+          const error = args[0]
           if (error instanceof Error) {
             server.ws.send({
               type: "custom",
@@ -56,119 +62,122 @@ function devClientErrorLogger() {
                 message: error.message,
                 stack: error.stack,
               },
-            });
+            })
           }
         } finally {
-          forwarding = false;
+          forwarding = false
         }
-      };
+      }
 
-      server.ws.on(
-        "client-runtime-error",
-        (data: Record<string, string>) => {
-          const { type, message, stack, filename, lineno, colno } = data;
-          const label =
-            type === "unhandled-rejection"
-              ? "Unhandled Rejection"
-              : "Runtime Error";
-          let loc = "";
-          if (filename) {
-            loc = ` at ${filename}`;
-            if (lineno != null) loc += `:${lineno}`;
-            if (colno != null) loc += `:${colno}`;
-          }
-          server.config.logger.error(
-            `\n[client] ${label}: ${message}${loc}`,
-          );
-          if (stack) {
-            server.config.logger.error(stack);
-          }
+      server.ws.on("client-runtime-error", (data: Record<string, string>) => {
+        const { type, message, stack, filename, lineno, colno } = data
 
-          server.ws.send({
-            type: "custom",
-            event: "client-runtime-error",
-            data,
-          });
-        },
-      );
+        const label =
+          type === "unhandled-rejection"
+            ? "Unhandled Rejection"
+            : "Runtime Error"
+
+        let loc = ""
+        if (filename) {
+          loc = ` at ${filename}`
+          if (lineno != null) loc += `:${lineno}`
+          if (colno != null) loc += `:${colno}`
+        }
+
+        server.config.logger.error(
+          `\n[client] ${label}: ${message}${loc}`,
+        )
+
+        if (stack) {
+          server.config.logger.error(stack)
+        }
+
+        server.ws.send({
+          type: "custom",
+          event: "client-runtime-error",
+          data,
+        })
+      })
     },
 
     transform(code: string, id: string) {
-      const normalizedId = id.replace(/\\/g, "/");
+      const normalizedId = id.replace(/\\/g, "/")
 
       if (normalizedId.includes("routes/__root")) {
-        return `import "${VIRTUAL_ID}";\n${code}`;
+        return `import "${VIRTUAL_ID}";\n${code}`
       }
     },
-  };
+  }
 }
 
+// =============================
+// DEV SERVER FN LOGGER
+// =============================
 function devServerFnErrorLogger() {
-  const HMR_SEND_KEY = "__TANSTACK_SERVER_FN_HMR_SEND__";
+  const HMR_SEND_KEY = "__TANSTACK_SERVER_FN_HMR_SEND__"
 
   return {
     name: "dev-server-fn-error-logger",
     apply: "serve" as const,
     enforce: "pre" as const,
+
     configureServer(server: import("vite").ViteDevServer) {
-      (globalThis as Record<string, unknown>)[HMR_SEND_KEY] = (data: unknown) => {
+      ; (globalThis as Record<string, unknown>)[HMR_SEND_KEY] = (data: unknown) => {
         server.ws.send({
           type: "custom",
           event: "server-fn-error",
           data,
-        });
-      };
+        })
+      }
     },
+
     transform(code: string, id: string) {
-      const normalizedId = id.replace(/\\/g, "/");
+      const normalizedId = id.replace(/\\/g, "/")
+
       const isTargetModule =
         normalizedId.includes(
           "/@tanstack/start-server-core/src/server-functions-handler.ts",
         ) ||
         normalizedId.includes(
           "/@tanstack/start-server-core/dist/esm/server-functions-handler.js",
-        );
+        )
 
-      if (!isTargetModule) {
-        return null;
-      }
+      if (!isTargetModule) return null
 
-      const needle = "const unwrapped = res.result || res.error";
-      if (!code.includes(needle)) {
-        return null;
-      }
+      const needle = "const unwrapped = res.result || res.error"
+      if (!code.includes(needle)) return null
 
       return code.replace(
         needle,
         `${needle}
 
-      if (res?.error) {
-        const err = res.error
-        const payload = {
-          source: 'tanstack',
-          type: 'server-fn-error',
-          method: request.method,
-          url: request.url,
-          name: err?.name ?? 'Error',
-          message: err?.message ?? String(err),
-          stack: typeof err?.stack === 'string' ? err.stack : undefined,
-        }
-        globalThis.${HMR_SEND_KEY}?.(payload)
-      }`,
-      );
+if (res?.error) {
+  const err = res.error
+  const payload = {
+    source: 'tanstack',
+    type: 'server-fn-error',
+    method: request.method,
+    url: request.url,
+    name: err?.name ?? 'Error',
+    message: err?.message ?? String(err),
+    stack: typeof err?.stack === 'string' ? err.stack : undefined,
+  }
+  globalThis.${HMR_SEND_KEY}?.(payload)
+}`,
+      )
     },
-  };
+  }
 }
 
-export default defineConfig(({ command, mode }) => {
-  // Use Cloudflare Workers plugin for builds (produces worker output)
-  // Skip for dev server (command=serve) since workerd runtime isn't available
-  const useCloudflare = command === "build";
+// =============================
+// CONFIG PRINCIPAL
+// =============================
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "VITE_")
 
-  const env = loadEnv(mode, process.cwd(), "VITE_");
-  const envDefine: Record<string, string> = {};
+  const envDefine: Record<string, string> = {}
   for (const [key, value] of Object.entries(env)) {
-    envDefine[`import.meta.env.${key}`] = JSON.stringify(value);
+    envDefine[`import.meta.env.${key}`] = JSON.stringify(value)
   }
 
   return {
@@ -176,13 +185,23 @@ export default defineConfig(({ command, mode }) => {
       host: "::",
       port: 8080,
     },
+
     define: envDefine,
+
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
-      dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime", "@tanstack/react-query", "@tanstack/query-core"],
+      dedupe: [
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
+        "react/jsx-dev-runtime",
+        "@tanstack/react-query",
+        "@tanstack/query-core",
+      ],
     },
+
     plugins: [
       tailwindcss(),
       tsConfigPaths({
@@ -190,10 +209,11 @@ export default defineConfig(({ command, mode }) => {
       }),
       devClientErrorLogger(),
       devServerFnErrorLogger(),
-      ...(useCloudflare ? [cloudflare({ viteEnvironment: { name: "ssr" } })] : []),
-      tanstackStart(),
+      tanstackStart({
+        target: "client"
+      } as any),
       viteReact(),
       mode === "development" && componentTagger(),
     ].filter(Boolean),
-  };
-});
+  }
+})
